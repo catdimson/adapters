@@ -16,13 +16,13 @@ class SimpleRouteBuilder extends RouteBuilder {
         //String zooKeeper = "zookeeperHost=rusagro-zhir.tengry.com&zookeeperPort=2181";
         //String serializerClass = "serializerClass=org.apache.kafka.common.serialization.StringSerializer";
         //String toRemoteKafka = kafkaServer + "?" + topicName + "&" + zooKeeper + "&" + serializerClass;
-        String to = "kafka:" + topicName + "?brokers=" + "rusagro-zhir.tengry.com:9092&key=qwerty";
+        String to = "kafka:" + topicName + "?brokers=" + "rusagro-zhir.tengry.com:9092";
         from("direct:from-1c-controller")
-                //.setHeader(KafkaConstants.KEY, constant("const-value"))
+                .setHeader(KafkaConstants.KEY, constant("key"))
                 .setHeader(KafkaConstants.PARTITION_KEY, constant(2))
                 //.setHeader(KafkaConstants.OVERRIDE_TIMESTAMP, constant(11111111111111111L))
-                .setHeader(KafkaConstants.OVERRIDE_TOPIC, constant("1c_upp"))
-                .setBody(constant("rewriting message 3"))
+                .setHeader(KafkaConstants.OVERRIDE_TOPIC, constant("bus_internal"))
+                //.setBody(constant("rewriting message 3"))
                 .to(to);
 
         //String toNew = "kafka:" + "terrasoft" + "?brokers=" + "rusagro-zhir.tengry.com:9092";
