@@ -1,6 +1,6 @@
 package com.dkotik.kafkatest.controllers;
 
-import com.dkotik.kafkatest.kafka.ProducerService;
+import com.dkotik.kafkatest.services.kafka.ProducerService;
 import com.dkotik.kafkatest.models.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

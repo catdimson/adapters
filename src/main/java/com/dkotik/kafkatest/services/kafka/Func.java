@@ -1,4 +1,4 @@
-package com.dkotik.kafkatest.kafka;
+package com.dkotik.kafkatest.services.kafka;
 
 @FunctionalInterface
 public interface Func<T> {
