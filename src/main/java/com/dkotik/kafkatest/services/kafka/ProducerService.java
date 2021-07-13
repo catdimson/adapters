@@ -42,10 +42,6 @@ public class ProducerService {
                 objectMapper.writeValueAsString(messageWrapper),
                 headers
         );
-        // "kafka:bus_internal?brokers=rusagro-zhir.tengry.com:9093",
-        //this.producerTemplate.sendBodyAndHeaders("direct:from-1c-controller", objectMapper.writeValueAsString(messageWrapper), headers);
-        //this.producerTemplate.sendBody("direct:from-1c-controller", ExchangePattern.InOut, message);
-
     }
 
     private String getFullUri() {

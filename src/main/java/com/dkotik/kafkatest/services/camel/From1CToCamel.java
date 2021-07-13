@@ -1,4 +1,3 @@
-/*
 
 package com.dkotik.kafkatest.services.camel;
 
@@ -13,11 +12,10 @@ class SimpleRouteBuilder extends RouteBuilder {
 
     ConfigProperties config;
 
-    */
-/*@Autowired
+@Autowired
     public SimpleRouteBuilder(ConfigProperties config) {
         this.config = config;
-    }*//*
+    }
 
 
     @Override
@@ -43,4 +41,3 @@ class SimpleRouteBuilder extends RouteBuilder {
 
 
 
-*/
