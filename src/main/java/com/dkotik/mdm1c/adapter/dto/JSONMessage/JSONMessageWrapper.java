@@ -1,5 +1,7 @@
-package com.dkotik.mdm1c.adapter.dto;
+package com.dkotik.mdm1c.adapter.dto.JSONMessage;
 
+import com.dkotik.mdm1c.adapter.dto.Recipient;
+import com.dkotik.mdm1c.adapter.dto.MessageWrapper;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashSet;

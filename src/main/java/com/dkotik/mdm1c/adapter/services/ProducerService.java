@@ -26,7 +26,7 @@ public class ProducerService implements Producer {
     }
 
     @Override
-    public void sendMessage(MessageWrapper messageWrapper) throws JsonProcessingException {
+    public void sendMessage(MessageWrapper messageWrapper) {
 
         Map<String, Object> headers = new HashMap<>();
 
@@ -35,14 +35,20 @@ public class ProducerService implements Producer {
         messageWrapper.getTo().forEach(address -> {
             to.add(address.getAddress().toString());
         });
-        headers.put("to", String.join(",", to));
+        headers.put("to", String.join(" ", to));
 
+        // вариант отправки сообщения для JSON
         ObjectMapper objectMapper = new ObjectMapper();
-        this.producerTemplate.sendBodyAndHeaders(
-                getFullUri(),
-                objectMapper.writeValueAsString(messageWrapper),
-                headers
-        );
+        try {
+            this.producerTemplate.sendBodyAndHeaders(
+                    getFullUri(),
+                    objectMapper.writeValueAsString(messageWrapper),
+                    headers
+            );
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private String getFullUri() {

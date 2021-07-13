@@ -1,21 +1,22 @@
-package com.dkotik.mdm1c.adapter.dto;
+package com.dkotik.mdm1c.adapter.dto.XMLMessage;
 
+import com.dkotik.mdm1c.adapter.dto.Recipient;
+import com.dkotik.mdm1c.adapter.dto.MessageWrapper;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@XmlType(name = "message")
-@XmlRootElement
+@XmlType(propOrder = {"originalMessage", "from", "to"}, name = "messageWrapper")
+@XmlRootElement(name = "message")
 public class XMLMessageWrapper implements MessageWrapper {
 
-    @JsonProperty("body")
+    @XmlElement(name = "body")
     String originalMessage;
-    @JsonProperty("from")
+    @XmlElement(name = "from")
     String from;
-    @JsonProperty("to")
+    @XmlElement(name = "to")
     Set<Recipient> to = new HashSet<>();
 
     public XMLMessageWrapper() {
