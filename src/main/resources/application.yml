@@ -9,4 +9,7 @@ server:
   port: 8081
 
 kafka-producer:
-  base-topic: "bus_internal"
+  topic: "bus_internal"
+  broker: "rusagro-zhir.tengry.com"
+  broker-port: "9093"
+  key: "transfer"

@@ -1,6 +1,6 @@
 package com.dkotik.kafkatest.dto;
 
-public enum SystemsAddress {
+public enum Address {
 
     MDM_1C("1c_mdm"),
     UPP_1C("1c_upp"),
@@ -12,7 +12,7 @@ public enum SystemsAddress {
         return topic;
     }
 
-    SystemsAddress(String topic) {
+    Address(String topic) {
         this.topic = topic;
     }
 }

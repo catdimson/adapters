@@ -6,15 +6,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Recipient {
 
     @JsonProperty
-    private SystemsAddress address;
+    private Address address;
 
     @JsonIgnore
-    public SystemsAddress getSystemsAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setSystemsAddress(SystemsAddress addressee) {
-        this.address = addressee;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override

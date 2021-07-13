@@ -7,13 +7,40 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "kafka-producer")
 public class ConfigProperties {
 
-    String baseTopic;
+    String topic;
+    String broker;
+    String brokerPort;
+    String key;
 
-    public String getBaseTopic() {
-        return baseTopic;
+    public String getKey() {
+        return key;
     }
 
-    public void setBaseTopic(String baseTopic) {
-        this.baseTopic = baseTopic;
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getBrokerPort() {
+        return brokerPort;
+    }
+
+    public void setBrokerPort(String brokerPort) {
+        this.brokerPort = brokerPort;
+    }
+
+    public String getBroker() {
+        return broker;
+    }
+
+    public void setBroker(String broker) {
+        this.broker = broker;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 }

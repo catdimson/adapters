@@ -1,3 +1,4 @@
+/*
 
 package com.dkotik.kafkatest.services.camel;
 
@@ -12,30 +13,27 @@ class SimpleRouteBuilder extends RouteBuilder {
 
     ConfigProperties config;
 
-    @Autowired
+    */
+/*@Autowired
     public SimpleRouteBuilder(ConfigProperties config) {
         this.config = config;
-    }
-
+    }*//*
 
 
     @Override
     public void configure() throws Exception {
-        //String kafkaServer = "kafka:rusagro-zhir.tengry.com:9092";
         String topicName = "bus_internal";
         //String serializerClass = "serializerClass=kafka.serializer.StringEncoder";
         //String zooKeeper = "zookeeperHost=rusagro-zhir.tengry.com&zookeeperPort=2181";
         //String serializerClass = "serializerClass=org.apache.kafka.common.serialization.StringSerializer";
         //String toRemoteKafka = kafkaServer + "?" + topicName + "&" + zooKeeper + "&" + serializerClass;
-        String topicFromProps = this.config.getBaseTopic();
-        String to = "kafka:" + topicName + "?brokers=" + "rusagro-zhir.tengry.com:9092";
+        //String topicFromProps = this.config.getBaseTopic();
+        String to = "kafka:" + topicName + "?brokers=" + "rusagro-zhir.tengry.com:9093";
 
         from("direct:from-1c-controller")
                 .setHeader(KafkaConstants.KEY, constant("transfer"))
                 .setHeader(KafkaConstants.PARTITION_KEY, constant(1))
-                //.setHeader(KafkaConstants.OVERRIDE_TIMESTAMP, constant(11111111111111111L))
                 .setHeader(KafkaConstants.OVERRIDE_TOPIC, constant("bus_internal"))
-                //.setBody(constant("rewriting message 3"))
                 .to(to);
 
         //String toNew = "kafka:" + "terrasoft" + "?brokers=" + "rusagro-zhir.tengry.com:9092";
@@ -45,3 +43,4 @@ class SimpleRouteBuilder extends RouteBuilder {
 
 
 
+*/

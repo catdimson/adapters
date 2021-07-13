@@ -7,17 +7,15 @@ import java.util.Set;
 
 public class MessageWrapper {
 
-    public MessageWrapper() {
-    }
-
     @JsonProperty("body")
     String originalMessage;
-
     @JsonProperty("from")
     String from;
-
     @JsonProperty("to")
     Set<Recipient> to = new HashSet<>();
+
+    public MessageWrapper() {
+    }
 
     public String getOriginalMessage() {
         return originalMessage;
