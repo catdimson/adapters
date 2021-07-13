@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@XmlType(propOrder = {"originalMessage", "from", "to"}, name = "messageWrapper")
+@XmlType(propOrder = {"originalMessage", "from", "to"})
 @XmlRootElement(name = "message")
 public class XMLMessageWrapper implements MessageWrapper {
 
