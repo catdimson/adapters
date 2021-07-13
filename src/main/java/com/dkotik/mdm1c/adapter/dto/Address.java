@@ -1,4 +1,4 @@
-package com.dkotik.kafkatest.dto;
+package com.dkotik.mdm1c.adapter.dto;
 
 public enum Address {
 

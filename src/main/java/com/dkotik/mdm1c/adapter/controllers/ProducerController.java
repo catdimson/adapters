@@ -1,7 +1,7 @@
-package com.dkotik.kafkatest.controllers;
+package com.dkotik.mdm1c.adapter.controllers;
 
-import com.dkotik.kafkatest.dto.MessageWrapper;
-import com.dkotik.kafkatest.services.kafka.ProducerService;
+import com.dkotik.mdm1c.adapter.dto.JSONMessageWrapper;
+import com.dkotik.mdm1c.adapter.services.ProducerService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +24,8 @@ public class ProducerController {
     }
 
     @PostMapping("/sendmessage")
-    public ResponseEntity<Void> sendMessage(@RequestBody MessageWrapper messageWrapper) throws JsonProcessingException {
-        producerService.sendMessage(messageWrapper);
+    public ResponseEntity<Void> sendMessage(@RequestBody JSONMessageWrapper JSONMessageWrapper) throws JsonProcessingException {
+        producerService.sendMessage(JSONMessageWrapper);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

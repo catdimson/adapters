@@ -1,4 +1,4 @@
-package com.dkotik.kafkatest;
+package com.dkotik.mdm1c.adapter;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

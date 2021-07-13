@@ -1,7 +1,7 @@
-package com.dkotik.kafkatest.services.kafka;
+package com.dkotik.mdm1c.adapter.services;
 
-import com.dkotik.kafkatest.ConfigProperties;
-import com.dkotik.kafkatest.dto.MessageWrapper;
+import com.dkotik.mdm1c.adapter.ConfigProperties;
+import com.dkotik.mdm1c.adapter.dto.MessageWrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.camel.ProducerTemplate;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ProducerService {
+public class ProducerService implements Producer {
 
     private final ProducerTemplate producerTemplate;
     private final ConfigProperties config;
@@ -25,6 +25,7 @@ public class ProducerService {
         this.config = config;
     }
 
+    @Override
     public void sendMessage(MessageWrapper messageWrapper) throws JsonProcessingException {
 
         Map<String, Object> headers = new HashMap<>();

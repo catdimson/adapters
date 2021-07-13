@@ -1,4 +1,4 @@
-package com.dkotik.kafkatest.dto;
+package com.dkotik.mdm1c.adapter.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,11 +1,15 @@
-package com.dkotik.kafkatest.dto;
+package com.dkotik.mdm1c.adapter.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.HashSet;
 import java.util.Set;
 
-public class MessageWrapper {
+@XmlType(name = "message")
+@XmlRootElement
+public class XMLMessageWrapper implements MessageWrapper {
 
     @JsonProperty("body")
     String originalMessage;
@@ -14,17 +18,20 @@ public class MessageWrapper {
     @JsonProperty("to")
     Set<Recipient> to = new HashSet<>();
 
-    public MessageWrapper() {
+    public XMLMessageWrapper() {
     }
 
+    @Override
     public String getOriginalMessage() {
         return originalMessage;
     }
 
+    @Override
     public String getFrom() {
         return from;
     }
 
+    @Override
     public Set<Recipient> getTo() {
         return to;
     }
@@ -38,4 +45,5 @@ public class MessageWrapper {
                 '}';
     }
 }
+
 
