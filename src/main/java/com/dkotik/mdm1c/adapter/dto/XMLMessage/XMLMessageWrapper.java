@@ -23,10 +23,6 @@ public class XMLMessageWrapper implements MessageWrapper {
     public XMLMessageWrapper() {
     }
 
-    public void addTo(Recipient recipient) {
-        to.add(recipient);
-    }
-
     @Override
     public String getOriginalMessage() {
         return originalMessage;

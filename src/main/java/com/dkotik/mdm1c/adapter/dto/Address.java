@@ -4,7 +4,6 @@ import com.sun.xml.txw2.annotation.XmlElement;
 
 import javax.xml.bind.annotation.*;
 
-@XmlRootElement(name = "address")
 @XmlEnum
 public enum Address {
 

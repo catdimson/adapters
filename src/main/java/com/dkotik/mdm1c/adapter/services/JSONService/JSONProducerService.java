@@ -28,7 +28,6 @@ public class JSONProducerService implements Producer {
 
     @Override
     public void sendMessage(MessageWrapper messageWrapper) {
-
         Map<String, Object> headers = new HashMap<>();
         extractHeaders(messageWrapper, headers);
         String result = serializerMessageWrapper(messageWrapper);
