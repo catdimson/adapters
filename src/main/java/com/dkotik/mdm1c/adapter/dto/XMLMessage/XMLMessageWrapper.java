@@ -16,10 +16,15 @@ public class XMLMessageWrapper implements MessageWrapper {
     String originalMessage;
     @XmlElement(name = "from")
     String from;
-    @XmlElement(name = "to")
+    @XmlElementWrapper(name = "to")
+    @XmlElement(name = "recipient")
     Set<Recipient> to = new HashSet<>();
 
     public XMLMessageWrapper() {
+    }
+
+    public void addTo(Recipient recipient) {
+        to.add(recipient);
     }
 
     @Override

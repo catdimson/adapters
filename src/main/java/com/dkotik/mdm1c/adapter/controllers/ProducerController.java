@@ -2,8 +2,8 @@ package com.dkotik.mdm1c.adapter.controllers;
 
 import com.dkotik.mdm1c.adapter.dto.JSONMessage.JSONMessageWrapper;
 import com.dkotik.mdm1c.adapter.dto.XMLMessage.XMLMessageWrapper;
-import com.dkotik.mdm1c.adapter.services.ProducerService;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.dkotik.mdm1c.adapter.services.JSONService.JSONProducerService;
+import com.dkotik.mdm1c.adapter.services.XMLService.XMLProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,22 +17,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1")
 public class ProducerController {
 
-    private ProducerService producerService;
+    private JSONProducerService jsonProducerService;
+    private XMLProducerService xmlProducerService;
 
     @Autowired
-    public ProducerController(ProducerService producerService) {
-        this.producerService = producerService;
+    public ProducerController(JSONProducerService jsonProducerService, XMLProducerService xmlProducerService) {
+        this.jsonProducerService = jsonProducerService;
+        this.xmlProducerService = xmlProducerService;
     }
 
     @PostMapping(value = "/sendMessageJSON", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> sendMessageJSON(@RequestBody JSONMessageWrapper jsonMessageWrapper) {
-        producerService.sendMessage(jsonMessageWrapper);
+        jsonProducerService.sendMessage(jsonMessageWrapper);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = "/sendMessageXML", consumes = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<Void> sendMessageXML(@RequestBody XMLMessageWrapper xmlMessageWrapper) {
-        producerService.sendMessage(xmlMessageWrapper);
+        xmlProducerService.sendMessage(xmlMessageWrapper);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
