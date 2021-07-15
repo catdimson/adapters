@@ -1,0 +1,12 @@
+{
+  "body": "содержимое тела",
+  "from": "MDM_1C",
+  "to": [
+    {
+      "address": "UPP_1C"
+    },
+    {
+      "address": "TERRASOFT"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message>
+    <body>содержимое тела XML</body>
+    <from>MDM_1C</from>
+    <to>
+        <recipient>
+            <address>TERRASOFT</address>
+        </recipient>
+        <recipient>
+            <address>UPP_1C</address>
+        </recipient>
+    </to>
+</message>
