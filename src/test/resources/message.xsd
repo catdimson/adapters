@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="message">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element  name="body" type="xs:string"/>
+                <xs:element  name="from" type="xs:string"/>
+                <xs:element  name="to" type="toType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name = "recipientType">
+        <xs:sequence>
+            <xs:element type = "xs:string" name = "address"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name = "toType">
+        <xs:sequence>
+            <xs:element type = "recipientType" name = "recipient"  maxOccurs="unbounded" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
