@@ -6,6 +6,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
@@ -36,24 +37,26 @@ public class ProducerControllerTest {
 
     @Autowired
     private Consumer consumer;
+    @Autowired
+    private KafkaTemplate template;
 
     @Test
     public void sendJsonMessage() throws Exception {
-        consumer.clearMessage();
+        System.out.println("message:" + consumer.getMessage());
+
         var json = new String(getClass().getClassLoader().getResourceAsStream("message.json").readAllBytes());
 
         var responce = mockMvc.perform(
                 post("/api/v1/sendMessageJSON").contentType("application/json").content(json))
                 .andReturn().getResponse();
         Thread.currentThread().sleep(10000);
-
         JSONAssert.assertEquals(consumer.getMessage(),json,false);
         assertThat(responce.getStatus()).isEqualTo(200);
     }
 
     @Test
     public void sendXmlMessage() throws Exception {
-        consumer.clearMessage();
+        System.out.println("message:" + consumer.getMessage());
         var xml = new String(getClass().getClassLoader().getResourceAsStream("message.xml").readAllBytes());
         var xsd = getClass().getClassLoader().getResourceAsStream("message.xsd");
 
@@ -61,6 +64,7 @@ public class ProducerControllerTest {
                 post("/api/v1/sendMessageXML").contentType("application/xml").content(xml))
                 .andReturn().getResponse();
         Thread.currentThread().sleep(10000);
+
 
         var message = new ByteArrayInputStream(consumer.getMessage().getBytes(StandardCharsets.UTF_8));
         assertThat( validateXML(message,xsd)).as("Некоректный xml").isTrue();

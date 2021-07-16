@@ -1,25 +1,24 @@
 package com.dkotik.mdm1c.adapter;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 @Component
 public class Consumer {
-    private String message;
+    private Queue<String> message = new LinkedList<>();
 
-    @KafkaListener(topics = {"embedded-test-topic"})
+    @KafkaListener(topics = "#{'${kafka-producer.topic}'}")
     public void listenTopis(ConsumerRecord<String,String> consumerRecord) {
-        message = consumerRecord.value();
+        message.add(consumerRecord.value());
+
     }
 
     public String getMessage() {
-        return message;
+        return message.poll();
     }
 
-    public void clearMessage(){
-        message=null;
-    }
 }
