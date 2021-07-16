@@ -12,9 +12,8 @@ public class Consumer {
     private Queue<String> message = new LinkedList<>();
 
     @KafkaListener(topics = "#{'${kafka-producer.topic}'}")
-    public void listenTopis(ConsumerRecord<String,String> consumerRecord) {
+    public void listenTopis(ConsumerRecord<String, String> consumerRecord) {
         message.add(consumerRecord.value());
-
     }
 
     public String getMessage() {

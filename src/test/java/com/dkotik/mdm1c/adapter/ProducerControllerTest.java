@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext
-@EmbeddedKafka(partitions = 1, brokerProperties = { "listeners=PLAINTEXT://localhost:9092", "port=9092" })
+@EmbeddedKafka(partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092"})
 public class ProducerControllerTest {
 
     @Autowired
@@ -37,26 +37,22 @@ public class ProducerControllerTest {
 
     @Autowired
     private Consumer consumer;
-    @Autowired
-    private KafkaTemplate template;
 
     @Test
     public void sendJsonMessage() throws Exception {
-        System.out.println("message:" + consumer.getMessage());
-
         var json = new String(getClass().getClassLoader().getResourceAsStream("message.json").readAllBytes());
 
         var responce = mockMvc.perform(
                 post("/api/v1/sendMessageJSON").contentType("application/json").content(json))
                 .andReturn().getResponse();
         Thread.currentThread().sleep(10000);
-        JSONAssert.assertEquals(consumer.getMessage(),json,false);
+
+        JSONAssert.assertEquals(consumer.getMessage(), json, false);
         assertThat(responce.getStatus()).isEqualTo(200);
     }
 
     @Test
     public void sendXmlMessage() throws Exception {
-        System.out.println("message:" + consumer.getMessage());
         var xml = new String(getClass().getClassLoader().getResourceAsStream("message.xml").readAllBytes());
         var xsd = getClass().getClassLoader().getResourceAsStream("message.xsd");
 
@@ -67,23 +63,19 @@ public class ProducerControllerTest {
 
 
         var message = new ByteArrayInputStream(consumer.getMessage().getBytes(StandardCharsets.UTF_8));
-        assertThat( validateXML(message,xsd)).as("Некоректный xml").isTrue();
+        assertThat(validateXML(message, xsd)).as("Некоректный xml").isTrue();
         assertThat(responce.getStatus()).isEqualTo(200);
     }
 
     private boolean validateXML(InputStream xml, InputStream xsd) {
-        try
-        {
+        try {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema schema = factory.newSchema(new StreamSource(xsd));
             Validator validator = schema.newValidator();
             validator.validate(new StreamSource(xml));
             return true;
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             return false;
         }
     }
-
 }
