@@ -37,13 +37,13 @@ public class ProducerControllerTest {
 
     @Test
     public void sendJsonMessage() throws Exception {
-        var json = new String(getClass().getClassLoader().getResourceAsStream("message.json").readAllBytes());
-        consumer.init();
+        var json = new String(getClass().getClassLoader().getResourceAsStream("message.json").readAllBytes(),StandardCharsets.UTF_8);
+
 
         var responce = mockMvc.perform(
                 post("/api/v1/sendMessageJSON").contentType("application/json").content(json))
                 .andReturn().getResponse();
-        consumer.getLatch().await(10000, TimeUnit.MILLISECONDS);
+        consumer.getLatch().await();
 
         assertThat(consumer.getLatch().getCount()).isEqualTo(0);
         JSONAssert.assertEquals(json, consumer.getMessage(), false);
@@ -54,7 +54,7 @@ public class ProducerControllerTest {
     public void sendXmlMessage() throws Exception {
         var xml = new String(getClass().getClassLoader().getResourceAsStream("message.xml").readAllBytes());
         var xsd = getClass().getClassLoader().getResourceAsStream("message.xsd");
-        consumer.init();
+
 
         var responce = mockMvc.perform(
                 post("/api/v1/sendMessageXML").contentType("application/xml").content(xml))

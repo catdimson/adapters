@@ -10,21 +10,19 @@ import java.util.concurrent.CountDownLatch;
 @Component
 public class Consumer {
 
-    private CountDownLatch latch = new CountDownLatch(2);
-    private String message;
+    private volatile CountDownLatch latch = new CountDownLatch(1);
+    private volatile String message;
 
     public CountDownLatch getLatch() {
         return latch;
     }
 
     @KafkaListener(topics = "#{'${kafka-producer.topic}'}")
-    public void listenTopis(ConsumerRecord<String, String> consumerRecord)  {
+    public synchronized void listenTopis(ConsumerRecord<String, String> consumerRecord)  {
         message = consumerRecord.value();
+        System.out.println("message:" + message);
         latch.countDown();
-    }
-
-    public void init() {
-        latch = new CountDownLatch(1);
+        System.out.println("latch:" + latch.getCount());
     }
 
 
