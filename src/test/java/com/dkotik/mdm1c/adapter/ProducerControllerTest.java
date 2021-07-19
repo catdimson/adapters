@@ -6,22 +6,18 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
-
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -45,11 +41,12 @@ public class ProducerControllerTest {
         var responce = mockMvc.perform(
                 post("/api/v1/sendMessageJSON").contentType("application/json").content(json))
                 .andReturn().getResponse();
-        Thread.currentThread().sleep(10000);
 
-        JSONAssert.assertEquals(consumer.getMessage(), json, false);
+
+        JSONAssert.assertEquals(json, consumer.getMessage(), false);
         assertThat(responce.getStatus()).isEqualTo(200);
     }
+
 
     @Test
     public void sendXmlMessage() throws Exception {
@@ -59,8 +56,6 @@ public class ProducerControllerTest {
         var responce = mockMvc.perform(
                 post("/api/v1/sendMessageXML").contentType("application/xml").content(xml))
                 .andReturn().getResponse();
-        Thread.currentThread().sleep(10000);
-
 
         var message = new ByteArrayInputStream(consumer.getMessage().getBytes(StandardCharsets.UTF_8));
         assertThat(validateXML(message, xsd)).as("Некоректный xml").isTrue();
