@@ -4,26 +4,32 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLOutput;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
+
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.SynchronousQueue;
 
 @Component
 public class Consumer {
 
-    private SynchronousQueue<String> message = new SynchronousQueue<>() ;
+    private CountDownLatch latch = new CountDownLatch(2);
+    private String message;
 
-    @KafkaListener(topics = "#{'${kafka-producer.topic}'}")
-    public void listenTopis(ConsumerRecord<String, String> consumerRecord) throws InterruptedException {
-        message.put(consumerRecord.value());
+    public CountDownLatch getLatch() {
+        return latch;
     }
 
-    public String getMessage() throws InterruptedException {
-        return message.take();
+    @KafkaListener(topics = "#{'${kafka-producer.topic}'}")
+    public void listenTopis(ConsumerRecord<String, String> consumerRecord)  {
+        message = consumerRecord.value();
+        latch.countDown();
+    }
+
+    public void init() {
+        latch = new CountDownLatch(1);
+    }
+
+
+    public String getMessage() {
+        return message;
     }
 
 }

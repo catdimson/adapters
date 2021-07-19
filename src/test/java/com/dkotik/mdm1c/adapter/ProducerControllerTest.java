@@ -18,6 +18,7 @@ import javax.xml.validation.Validator;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -37,27 +38,32 @@ public class ProducerControllerTest {
     @Test
     public void sendJsonMessage() throws Exception {
         var json = new String(getClass().getClassLoader().getResourceAsStream("message.json").readAllBytes());
+        consumer.init();
 
         var responce = mockMvc.perform(
                 post("/api/v1/sendMessageJSON").contentType("application/json").content(json))
                 .andReturn().getResponse();
+        consumer.getLatch().await(10000, TimeUnit.MILLISECONDS);
 
-
+        assertThat(consumer.getLatch().getCount()).isEqualTo(0);
         JSONAssert.assertEquals(json, consumer.getMessage(), false);
         assertThat(responce.getStatus()).isEqualTo(200);
     }
 
 
-    @Test
     public void sendXmlMessage() throws Exception {
         var xml = new String(getClass().getClassLoader().getResourceAsStream("message.xml").readAllBytes());
         var xsd = getClass().getClassLoader().getResourceAsStream("message.xsd");
+        consumer.init();
 
         var responce = mockMvc.perform(
                 post("/api/v1/sendMessageXML").contentType("application/xml").content(xml))
                 .andReturn().getResponse();
 
+        consumer.getLatch().await(10000, TimeUnit.MILLISECONDS);
         var message = new ByteArrayInputStream(consumer.getMessage().getBytes(StandardCharsets.UTF_8));
+
+        assertThat(consumer.getLatch().getCount()).isEqualTo(0);
         assertThat(validateXML(message, xsd)).as("Некоректный xml").isTrue();
         assertThat(responce.getStatus()).isEqualTo(200);
     }
