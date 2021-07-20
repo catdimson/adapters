@@ -32,26 +32,25 @@ public class ProducerControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private Consumer consumer;
 
     @Test
     public void sendJsonMessage() throws Exception {
+        Consumer.init();
         var json = new String(getClass().getClassLoader().getResourceAsStream("message.json").readAllBytes(),StandardCharsets.UTF_8);
-
 
         var responce = mockMvc.perform(
                 post("/api/v1/sendMessageJSON").contentType("application/json").content(json))
                 .andReturn().getResponse();
-        consumer.getLatch().await();
+        Consumer.getLatch().await();
 
-        assertThat(consumer.getLatch().getCount()).isEqualTo(0);
-        JSONAssert.assertEquals(json, consumer.getMessage(), false);
+        assertThat(Consumer.getLatch().getCount()).isEqualTo(0);
+        JSONAssert.assertEquals(json, Consumer.getMessage(), false);
         assertThat(responce.getStatus()).isEqualTo(200);
     }
 
-
+    @Test
     public void sendXmlMessage() throws Exception {
+        Consumer.init();
         var xml = new String(getClass().getClassLoader().getResourceAsStream("message.xml").readAllBytes());
         var xsd = getClass().getClassLoader().getResourceAsStream("message.xsd");
 
@@ -60,10 +59,10 @@ public class ProducerControllerTest {
                 post("/api/v1/sendMessageXML").contentType("application/xml").content(xml))
                 .andReturn().getResponse();
 
-        consumer.getLatch().await(10000, TimeUnit.MILLISECONDS);
-        var message = new ByteArrayInputStream(consumer.getMessage().getBytes(StandardCharsets.UTF_8));
+        Consumer.getLatch().await(10000, TimeUnit.MILLISECONDS);
+        var message = new ByteArrayInputStream(Consumer.getMessage().getBytes(StandardCharsets.UTF_8));
 
-        assertThat(consumer.getLatch().getCount()).isEqualTo(0);
+        assertThat(Consumer.getLatch().getCount()).isEqualTo(0);
         assertThat(validateXML(message, xsd)).as("Некоректный xml").isTrue();
         assertThat(responce.getStatus()).isEqualTo(200);
     }
